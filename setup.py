@@ -1,11 +1,21 @@
-import pygame
+import pygame,sys,time as tm
 from pygame import *
-from libs import VKAPI
+from engine import gui
+from libs import VKAPI,windows,updater
 
 if(__name__=='__main__'):
 	vk = VKAPI.VK('configs','standart')
 	vk.checkAuthKey()
-	print(vk.getNewsNumber())#РИСУЙ МАКЕТ ИГРЫ, ЛУЧШЕ ДЕЛАЙ ПО НЕМУ ВСЁ, НЕ ИСПОЛЬЗУЙ МАКЕТ КАК СТРАНИЦУ
-	#ПРОВЕРЬ РАБОТОСПОСОБНОСТЬ ФИГНИ ВЫШЕ, ТАКОЕ ЧУВСТВО КАК БУДТО ОНА НЕ ПАШЕТ
-	#ПРИДУМАЙ ЧТО ДЕЛАТЬ С ОКНАМИ И СТРАНИЦАМИ, НАРИСУЙ В ТЕТР ДЕРЕВО ОКОН И СТРАНИЦ, ПРИДУМАЙ ЧТО БУДЕТ СТОЯТЬ ВЫШЕ ОКОН, МОЖЕТ МЕНЕДЖЕР ОКОН КАКОЙ НИТЬ
-	#НЕ ИСПОЛЬЗУЙ GAME.PY, ТОЛЬКО КНОПКИ, СЛАЙДЕРЫ И АУДИО, МОЖЕТ БЫТЬ ЕЩЁ И PAGE
+	cfg = vk.nowCFG
+	winPos = cfg['pos']
+	gui = gui.GUI(winPos,(300,300))
+	windows.create(gui,vk)
+	startTime = tm.time()
+	while(1==1):
+		gui.tick(60)
+		nowTime = tm.time()
+		if(nowTime-startTime>cfg['updateTime']):
+			updater.update(gui,vk)
+			updateReady = False
+			startTime = tm.time()
+		gui.blitWindow()

@@ -60,7 +60,7 @@ class VK:
 		requestDict = self.request('messages.getLastActivity',{'user_id':self.nowCFG['userID'],'access_token':self.nowCFG['accessToken'],'version':'5.62'})
 		resp = requestDict['response']
 		activityDict = {
-			'online':resp['online'],
+			'online':int(resp['online']),
 			'time':resp['time']
 		}
 		return(activityDict)

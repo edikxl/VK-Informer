@@ -1,3 +1,6 @@
+import pygame
+from pygame import *
+
 class Slider():
 	def __init__(self):
 		self.sliderDict = {}
